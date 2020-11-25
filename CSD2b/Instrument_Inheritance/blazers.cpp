@@ -4,14 +4,16 @@
 
 Blazers::Blazers(std::string sound, int pitchRange) : Instrument(sound, pitchRange)
 {
-  std::cout<<"Blazers :: Constructor = "
-    << sound <<" "<< pitchRange << "\n";
+  // hulpmiddel om constructors gemaakt te zien worden
+  // std::cout<<"Blazers    - Constructor || (Sound, pitchRange) ("
+    // << sound <<", "<< pitchRange << ")\n";
 }
 
 
 Blazers::~Blazers()
 {
-  std::cout<<"Blazers :: Destructor\n";
+  // hulpmiddel om destructors gemaakt te zien worden
+  // std::cout<<"Blazers    - Destructor\n";
 }
 
 

@@ -11,7 +11,7 @@ public:
   Instrument(std::string sound, int pitchRange);
   ~Instrument();
   void play();
-
+  void midi();
 protected:
 
   std::string sound;

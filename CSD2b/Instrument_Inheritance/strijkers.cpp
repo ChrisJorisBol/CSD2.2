@@ -4,14 +4,16 @@
 
 Strijkers::Strijkers(std::string sound, int pitchRange) : Instrument(sound, pitchRange)
 {
-  std::cout<<"Strijkers :: Constructor = "
-    << sound << " " << pitchRange << "\n";
+  // hulpmiddel om constructors gemaakt te zien worden
+  // std::cout<<"Strijkers  - Constructor || (Sound, pitchRange) ("
+  //   << sound <<", "<< pitchRange << ")\n";
 }
 
 
 Strijkers::~Strijkers()
 {
-  std::cout<<"Strijkers :: Destructor\n";
+  // hulpmiddel om deqstructors gemaakt te zien worden
+  // std::cout<<"Strijkers  - Destructor\n";
 }
 
 
