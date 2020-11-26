@@ -54,36 +54,32 @@ char* letterpointer;
   std::cout << *yearpointer <<"\n";
 
   *yearpointer = 2020;
-  
-  // give year a new value via yearpointer
-  // -- your code here --
+  std::cout<< "The variable year has gotten a new value through yearpointer.\n";
 
   std::cout << "Contents of the variabele year: ";
-  // -- your code here --
+  std::cout << year <<"\n";
 
-
-  // create another pointer to year, named anotheryearpointer
-  // -- your code here --
+  unsigned short *anotheryearpointer;
+  anotheryearpointer = &year;
 
   std::cout << "Contents of anotheryearpointer: ";
-  // -- your code here --
+  std::cout << anotheryearpointer <<"\n";
 
   std::cout << "Contents of what anotheryearpointer points to: ";
-  // -- your code here --
+  std::cout << *anotheryearpointer <<"\n";
 
-  // give year a new value via anotheryearpointer
-  // -- your code here --
+  *anotheryearpointer = 2021;
 
-  std::cout << "Contents of year: ";
-  // -- your code here --
+  std::cout << "Contents of variable year: ";
+  std::cout << year <<"\n";
 
   std::cout << "Contents of what anotheryearpointer points to: ";
-  // -- your code here --
+  std::cout << *anotheryearpointer <<"\n";
 
-  //anotheryearpointer++;
+  anotheryearpointer++;
 
   std::cout << "Contents of anotheryearpointer after ++: ";
-  // -- your code here --
+  std::cout << *anotheryearpointer <<"\n";
 
 
 } // main()
