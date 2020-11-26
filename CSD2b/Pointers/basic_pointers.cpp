@@ -14,25 +14,26 @@
 int main()
 {
 char letter = 97; // find this in the ASCII table (type 'man ascii')
-char *letterpointer;
+char* letterpointer;
 
   std::cout << "Contents of the variable letter: ";
-  // -- your code here --
+  std::cout << letter <<"\n";
 
   letterpointer = &letter;
   std::cout << "Contents of letterpointer: ";
-  // -- your code here --
+  std::cout << letterpointer <<"\n";
 
   std::cout << "Contents of what letterpointer points to: ";
-  // -- your code here --
+  std::cout << *letterpointer <<"\n";
 
   *letterpointer = 'b';
-  std::cout << "The variabele letter has gotten a new value through letterpointer.";
+  std::cout << "The variable letter has gotten a new value through letterpointer.\n";
   std::cout << "Contents of what letterpointer points to: ";
-  // -- your code here --
+  std::cout << *letterpointer <<"\n";
 
   std::cout << "Contents of the variable letter: ";
-  // -- your code here --
+  std::cout << letter <<"\n";
+
 
 
   /*
@@ -41,16 +42,19 @@ char *letterpointer;
 
   unsigned short year = 2019;
   std::cout << "Contents of the variabele year: ";
-  // -- your code here --
+  std::cout << year <<"\n";
 
-  // create a pointer to year
-  // -- your code here --
-
+  unsigned short *yearpointer;
+  yearpointer = &year;
   std::cout << "Contents of yearpointer: ";
-  // -- your code here --
+  std::cout << yearpointer <<"\n";
+
 
   std::cout << "Contents of what yearpointer points to: ";
+  std::cout << *yearpointer <<"\n";
 
+  *yearpointer = 2020;
+  
   // give year a new value via yearpointer
   // -- your code here --
 
