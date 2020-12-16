@@ -6,7 +6,7 @@ class Oscillator
 {
 public:
   //Constructor and destructor
-  Oscillator(float frequency, double samplerate);
+  Oscillator(double frequency, double samplerate);
   ~Oscillator();
 
   //return the current sample
@@ -15,15 +15,15 @@ public:
   void tick(double phasedelta);
 
   //getters and setters
-  void setFrequency(float frequency);
+  void setFrequency(double frequency);
   float getFrequency();
-  double getPhasedelta(float frequency, double samplerate);
+  double getPhasedelta(double frequency, double samplerate);
   //NOTE - do we need a setter for phase? for now -> not using one
 
 protected:
   float amplitude;
-  float frequency;
-  float phase;
+  double frequency;
+  double phase;
   // contains the current sample
   float sample;
   double samplerate;

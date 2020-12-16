@@ -1,9 +1,8 @@
 #include "saw.h"
 #include "math.h"
 
-Saw::Saw(float frequency, double samplerate) : Oscillator(frequency, samplerate)
+Saw::Saw(double frequency, double samplerate) : Oscillator(frequency, samplerate)
 {
-  // return phasedelta = frequency/samplerate;
   std::cout << "Saw - constructor\n";
 }
 
@@ -13,16 +12,16 @@ Saw::~Saw()
 }
 
 
-void Saw::tick(double phasedelta) {
-  // NOTE - frequency / SAMPLERATE can be implemented in a more efficient way
-  phase += phasedelta;
-  for(unsigned int i = 1; i<80; i++)
+void Saw::calc() {
+  double y = 0;
+  //Saw waves are buildup of all harmonics.
+  //So if freq= 100, all harmonics are 100 * x | where x = the number of the harmonic
+  //Here I use an abritrary number of 80
+  //TO DO || Make it so the harmonics have different amplitudes.
+  //??Nyquist frequency interaction?
+  for(unsigned int i = 1; i<150; i++)
   {
-    sample += (sin(M_PI * 2 * phase * i))/i;
+    y += (sin(M_PI * 2 * phase * i))/i;
   }
-  // sample = sin(M_PI * 2 * phase);
-  if (phase>1.0)
-  {
-    phase -= 1.0;
-  }
+  sample = y;
 }

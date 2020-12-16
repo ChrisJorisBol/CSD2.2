@@ -6,6 +6,10 @@
 #include "sine.h"
 #include "square.h"
 #include "saw.h"
+#include "triangle.h"
+#include <limits>
+#include <sstream>
+#include "writeToFile.h"
 /*
  * NOTE: jack2 needs to be installed
  * jackd invokes the JACK audio server daemon
@@ -18,30 +22,39 @@
 
 int main(int argc,char **argv)
 {
+  WriteToFile fileWriter_output("data_output_sin.csv", true);
   // create a JackModule instance
   JackModule jack;
-  for(unsigned int i = 0; i<19; i++)
-  {
-    int x = (i*2)+1;
-    std::cout<< x << "\n";
-  }
+
   // init the jack, use program name as JACK client name
   jack.init(argv[0]);
   double samplerate = jack.getSamplerate();
-  Square osc(220, samplerate);
-  float oscFrequency = osc.getFrequency();
+  //Create an oscillator
+  Triangle osc(200, samplerate);
+        // Saw saw(45, samplerate);
+  double oscFrequency = osc.getFrequency();
+        // float sawFrequency = saw.getFrequency();
+  //simplifying the calculation by seperation
   double oscphasedelta = osc.getPhasedelta(oscFrequency, samplerate);
-  std::cout<<"Phasedelta - "<< oscphasedelta;
+        // double sawphasedelta = saw.getPhasedelta(sawFrequency, samplerate);
+        // std::cout<<"Phasedelta - "<< oscphasedelta;
   //assign a function to the JackModule::onProces
 
-  jack.onProcess = [&osc,oscphasedelta](jack_default_audio_sample_t *inBuf,
+  jack.onProcess = [&osc,oscphasedelta,&fileWriter_output](jack_default_audio_sample_t *inBuf,
      jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
 
-    static float amplitude = 0.015;
+    static float amplitude = 1;
 
     for(unsigned int i = 0; i < nframes; i++) {
-      outBuf[i] = osc.getSample() * amplitude;
+      fileWriter_output.write(std::to_string(osc.getSample()*amplitude) + "\n");
+      outBuf[i] = osc.getSample()*amplitude;
+      //.tick is the same for all Waveforms
       osc.tick(oscphasedelta);
+          // saw.tick(sawphasedelta);
+      //the waveforms turns unique by the different calculations.
+      osc.calc();
+          // saw.calc();
+          // break;
     }
 
     return 0;

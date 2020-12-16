@@ -6,10 +6,10 @@ class Sine : public Oscillator
 {
 public:
   //Constructor and destructor
-  Sine(float frequency, double samplerate);
+  Sine(double frequency, double samplerate);
   ~Sine();
   // go to next sample
-  void tick(double phasedelta);
+  void calc();
   // double getPhasedelta(float frequency, double samplerate);
   //NOTE - do we need a setter for phase? for now -> not using one
 
