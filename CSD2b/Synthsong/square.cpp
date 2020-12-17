@@ -3,8 +3,8 @@
 
 Square::Square(double frequency, double samplerate) : Oscillator(frequency, samplerate)
 {
-  // return phasedelta = frequency/samplerate;
   std::cout << "Square - constructor\n";
+
 }
 
 Square::~Square()
@@ -15,12 +15,13 @@ Square::~Square()
 
 void Square::calc() {
   double y =0;
-  for(unsigned int i = 0; i<150; i++)
+  for(unsigned int i = 0; i<70; i++)
   {
-    int x = (i*2)+1;
-    y += (sin(M_PI * 2 * phase * x)/x);
+    //Alleen oneven harmonischen
+    int n = (i*2)+1;
+    //Iteratief de samples per harmonic bij elkaar optellen
+    y += (sin(M_PI * 2 * phase * n)/n);
   }
   sample = y;
-  // std::cout <<sample;
-   // sample = sin(M_PI * 2 * phase) + sin(M_PI * 2 * phase *3)/3 + sin(M_PI * 2 * phase*5)/5 + sin(M_PI * 2 * phase*7)/7 + sin(M_PI * 2 * phase*9)/9 + sin(M_PI * 2 * phase*11)/11 + sin(M_PI * 2 * phase*13)/13;
+
 }

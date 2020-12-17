@@ -18,6 +18,7 @@ public:
   void setFrequency(double frequency);
   float getFrequency();
   double getPhasedelta(double frequency, double samplerate);
+  virtual void calc();
   //NOTE - do we need a setter for phase? for now -> not using one
 
 protected:
