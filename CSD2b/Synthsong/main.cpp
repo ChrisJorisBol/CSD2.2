@@ -10,6 +10,7 @@
 #include <limits>
 #include <sstream>
 #include "writeToFile.h"
+#include "melodygen.h"
 /*
  * NOTE: jack2 needs to be installed
  * jackd invokes the JACK audio server daemon
@@ -32,7 +33,8 @@ int main(int argc,char **argv)
   jack.init(argv[0]);
   double samplerate = jack.getSamplerate();
   //Create an oscillator with a frequency
-
+  Melodygen melody;
+  melody.generate(10);
   Saw saw(400,samplerate);
   Square square(100,samplerate);
   Triangle triangle(175,samplerate);
