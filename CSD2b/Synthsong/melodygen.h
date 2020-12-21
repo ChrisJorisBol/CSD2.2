@@ -8,7 +8,7 @@ class Melodygen
 public:
   Melodygen();
   ~Melodygen();
-  void generate(int amount);
+  float* generate(int amount);
   float mtoF(int midiNote);
 private:
   int amount;

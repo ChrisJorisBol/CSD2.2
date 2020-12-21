@@ -11,6 +11,7 @@
 #include <sstream>
 #include "writeToFile.h"
 #include "melodygen.h"
+#include "timer.h"
 /*
  * NOTE: jack2 needs to be installed
  * jackd invokes the JACK audio server daemon
@@ -34,7 +35,10 @@ int main(int argc,char **argv)
   double samplerate = jack.getSamplerate();
   //Create an oscillator with a frequency
   Melodygen melody;
-  melody.generate(10);
+  float* mel = melody.generate(10);
+  Timer timer;
+  timer.pulse();
+
   Saw saw(400,samplerate);
   Square square(100,samplerate);
   Triangle triangle(175,samplerate);
