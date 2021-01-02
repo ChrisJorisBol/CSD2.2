@@ -14,12 +14,15 @@ Melodygen::~Melodygen()
 }
 
 
-float* Melodygen::generate(int amount)
+double* Melodygen::generate(int amount)
 {
-  float* melody = new float[amount];
+  double* melody = new double[amount];
   for(int i = 0; i<amount; i++)
   {
-    int y = (rand() % 11) + 70;
+    int y = (rand() % 7);
+    double toonladder[8] = {0,2,3,5,7,8,10,12};
+    y = toonladder[y];
+    y+=60;
     melody[i]= y;
     mtoF(melody[i]);
     melody[i]=mtoF(melody[i]);

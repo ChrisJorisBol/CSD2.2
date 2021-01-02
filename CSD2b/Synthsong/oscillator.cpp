@@ -1,11 +1,11 @@
 #include "oscillator.h"
 #include "math.h"
-
+#include <chrono>
+#include <thread>
+#include <future>
 Oscillator::Oscillator(double frequency, double samplerate) : frequency(frequency),
   samplerate(samplerate), amplitude(0.5), sample(0), phase(0), phasedelta(0)
 {
-  // return phasedelta = frequency/samplerate;
-
   std::cout << "Oscillator - constructor\n";
 }
 
@@ -23,15 +23,15 @@ double Oscillator::getPhasedelta(double frequency, double samplerate){
 }
 
 //getters and setters
-void Oscillator::setFrequency(double frequency)
+double Oscillator::setFrequency(double frequency)
 {
-  // TODO add check to see if parameter is valid
   this->frequency = frequency;
+  phasedelta = getPhasedelta(frequency, samplerate);
 }
 
 float Oscillator::getFrequency()
 {
-  std::cout<<"frequency = "<<frequency;
+  // std::cout<<"frequency = "<<frequency;
   return frequency;
 }
 
@@ -39,12 +39,24 @@ void Oscillator::calc()
 {
 }
 
-void Oscillator::tick(double phasedelta) {
-  // NOTE - frequency / SAMPLERATE can be implemented in a more efficient way
+void Oscillator::tick() {
   calc();
   phase += phasedelta;
   if (phase>1.0)
   {
     phase -= 1.0;
+  }
+}
+
+void Oscillator::foo(double mel[])
+{
+  for(int x = 0; x<40; x++)
+  {
+    double frequency = mel[x];
+    setFrequency(frequency);
+    std::cout<<"frequency = "<<frequency<<"\n";
+    //sleep as a timing mechanism.
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
   }
 }

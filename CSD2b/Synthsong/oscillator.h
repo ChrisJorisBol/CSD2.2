@@ -12,12 +12,13 @@ public:
   //return the current sample
   float getSample();
   // go to next sample
-  void tick(double phasedelta);
+  void tick();
 
   //getters and setters
-  void setFrequency(double frequency);
+  double setFrequency(double frequency);
   float getFrequency();
   double getPhasedelta(double frequency, double samplerate);
+  void foo(double mel[]);
   virtual void calc();
   //NOTE - do we need a setter for phase? for now -> not using one
 
@@ -29,6 +30,7 @@ protected:
   float sample;
   double samplerate;
   double phasedelta;
+  // float mel[];
 };
 
 #endif
