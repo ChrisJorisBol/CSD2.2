@@ -6,11 +6,11 @@
 Oscillator::Oscillator(double frequency, double samplerate) : frequency(frequency),
   samplerate(samplerate), amplitude(0.5), sample(0), phase(0), phasedelta(0)
 {
-  std::cout << "Oscillator - constructor\n";
+  // std::cout << "Oscillator - constructor\n";
 }
 
 Oscillator::~Oscillator() {
-  std::cout << "Oscillator - destructor\n";
+  // std::cout << "Oscillator - destructor\n";
 }
 
 float Oscillator::getSample() {
@@ -23,7 +23,7 @@ double Oscillator::getPhasedelta(double frequency, double samplerate){
 }
 
 //getters and setters
-double Oscillator::setFrequency(double frequency)
+void Oscillator::setFrequency(double frequency)
 {
   this->frequency = frequency;
   phasedelta = getPhasedelta(frequency, samplerate);
@@ -33,6 +33,22 @@ float Oscillator::getFrequency()
 {
   // std::cout<<"frequency = "<<frequency;
   return frequency;
+}
+
+void Oscillator::setAmplitude(float amplitude, bool option)
+{
+  if(option == true){
+    this->amplitude = amplitude;
+  }
+  if(option == false){
+    this->amplitude = amplitude/127;
+  }
+}
+
+
+float Oscillator::getAmplitude()
+{
+  return amplitude;
 }
 
 void Oscillator::calc()
@@ -48,15 +64,14 @@ void Oscillator::tick() {
   }
 }
 
-void Oscillator::foo(double mel[])
+void Oscillator::timer(double mel[], int timing, int len)
 {
-  for(int x = 0; x<40; x++)
+  for(int x = 0; x<len; x++)
   {
     double frequency = mel[x];
     setFrequency(frequency);
     std::cout<<"frequency = "<<frequency<<"\n";
     //sleep as a timing mechanism.
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
+    std::this_thread::sleep_for(std::chrono::milliseconds(timing));
   }
 }

@@ -3,12 +3,12 @@
 
 Saw::Saw(double frequency, double samplerate) : Oscillator(frequency, samplerate)
 {
-  std::cout << "Saw - constructor\n";
+  // std::cout << "Saw - constructor\n";
 }
 
 Saw::~Saw()
 {
-  std::cout << "Saw - destructor\n";
+  // std::cout << "Saw - destructor\n";
 }
 
 
@@ -19,7 +19,7 @@ void Saw::calc() {
   //Here I use an abritrary number of 80
   //TO DO || Make it so the harmonics have different amplitudes.
   //??Nyquist frequency interaction?
-  for(unsigned int i = 1; i<150; i++)
+  for(unsigned int i = 1; i<50; i++)
   {
     y += (sin(M_PI * 2 * phase * i))/i;
   }

@@ -4,19 +4,19 @@
 Triangle::Triangle(double frequency, double samplerate) : Oscillator(frequency, samplerate)
 {
   // return phasedelta = frequency/samplerate;
-  std::cout << "Triangle - constructor\n";
+  // std::cout << "Triangle - constructor\n";
 }
 
 Triangle::~Triangle()
 {
-  std::cout << "Triangle - destructor\n";
+  // std::cout << "Triangle - destructor\n";
 }
 
 
 void Triangle::calc() {
   double y =0;
   int invert = 1;
-  for(unsigned int i = 0; i<150; i++)
+  for(unsigned int i = 0; i<50; i++)
   {
     int n = (i*2)+1;
     //Bij een triangle waveform

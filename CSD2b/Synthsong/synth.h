@@ -10,7 +10,7 @@ public:
 
   void noteOn();
   void noteOff();
-  // void addVoice(int voiceNumber);
+  void addVoice(int voiceNumber);
   // void removeVoice(int oscNumber);
   void assignVoice(std::string oscType, int voiceNumber);
   void voiceHelp();

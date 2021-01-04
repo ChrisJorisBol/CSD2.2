@@ -3,12 +3,12 @@
 
 Synth::Synth()
 {
-  std::cout<<"Synth - Constructor\n";
+  // std::cout<<"Synth - Constructor\n";
 }
 
 Synth::~Synth()
 {
-  std::cout<<"Synth - Destructor\n";
+  // std::cout<<"Synth - Destructor\n";
 }
 
 void Synth::noteOn()
@@ -23,18 +23,21 @@ void Synth::noteOff()
   // return output;
 }
 //
-// void Synth::addVoice(int voiceNumber)
-// {
-//   std::cin>> voiceNumber;
-//
-// }
+void Synth::addVoice(int voiceNumber)
+{
+  std::cin>> voiceNumber;
+  for(int x = 0 ; x < voiceNumber; x++)
+  {
+
+  }
+}
 //
 // void Synth::removeVoice(int voiceNumber)
 
-void Synth::assignVoice(std::string oscType, int voiceNumber)
-{
-
-}
+// void Synth::assignVoice(std::string oscType, int voiceNumber)
+// {
+//
+// }
 
 void voiceHelp()
 {

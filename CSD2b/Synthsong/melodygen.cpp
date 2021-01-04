@@ -4,13 +4,13 @@
 
 Melodygen::Melodygen()
 {
-  std::cout<<"Melodygen - Constructor\n";
+  // std::cout<<"Melodygen - Constructor\n";
 }
 
 
 Melodygen::~Melodygen()
 {
-  std::cout<<"Melodygen - Destructor\n";
+  // std::cout<<"Melodygen - Destructor\n";
 }
 
 
