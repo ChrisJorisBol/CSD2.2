@@ -30,9 +30,11 @@ int main(int argc,char **argv)
 
   // transform delay time in seconds to delay time in number of samples
   // instantiate circular buffer, 2x larger then delay time and set delay
-  CircBuffer circBuffer(44100);
+  CircBuffer circBuffer(441000);
   circBuffer.setDistanceRW(50);
   circBuffer.setDistanceExtraRW(441);
+  // circBuffer.setDistanceExtraRWO(441);
+  // circBuffer.setDistanceExtraRWOL(441);
   circBuffer.logAllSettings();
 
   //assign a function to the JackModule::onProces
@@ -41,11 +43,26 @@ int main(int argc,char **argv)
 
     for(unsigned int i = 0; i < nframes; i++) {
       // write input to delay
+      //Writing multiple times allows sample skipping
+      //Usage of this allows intervals besides an octave.
       circBuffer.write(inBuf[i]);
-      // read delayed output
-      outBuf[i] = circBuffer.read() * 0.5;
-      // update delay --> next sample
       circBuffer.tick();
+      circBuffer.write(inBuf[i]);
+      circBuffer.tick();
+      circBuffer.write(inBuf[i]);
+      circBuffer.tick();
+      circBuffer.write(inBuf[i]);
+      outBuf[i] = circBuffer.readExtraRH()* 0.5;
+
+
+      circBuffer.tick();
+      // circBuffer.tickReadHead();
+      //Below is the tick for the fifth
+      circBuffer.tickExtraRH();
+      // //Below is the tick for an octave higher
+      // circBuffer.tickExtraRHO();
+      // //Below is the tick for an octave lower
+      // circBuffer.tickExtraRHOL();
     }
     return 0;
   };

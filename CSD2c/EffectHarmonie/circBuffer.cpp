@@ -52,7 +52,7 @@ void CircBuffer::setDistanceExtraRW(uint distanceExtraRW)
 {
 	m_distanceExtraRW = distanceExtraRW;
 	m_extraReadH = m_writeH - m_distanceExtraRW + m_size;
-	wrapH(m_extraReadH);
+	wrapExtraH(m_extraReadH);
 }
 
 uint CircBuffer::getDistanceExtraRW()
@@ -60,12 +60,28 @@ uint CircBuffer::getDistanceExtraRW()
 	return m_distanceExtraRW;
 }
 
-// float CircBuffer::readExtra(float sample)
-// {
-// 	sample = m_buffer[m_extraReadH];
-//
-//
-// }
+uint CircBuffer::calcDistance(uint readhead)
+{
+	//calculate the distance to see if we need extra wrapping
+	//as to not go past the writehead.
+	int distance;
+	distance = m_writeH-readhead;
+	std::cout<<"distance = "<<distance<<std::endl;
+
+	if(distance<0)
+	{
+		distance = (readhead-m_size) * -1 + m_writeH;
+	}
+	if(distance < 1000 && wrapExtraRH == 1)
+	{
+		readhead-=5000;
+	}
+	if(distance < 1000 && wrapExtraRH == 0)
+	{
+		readhead = m_size-5000;
+	}
+	return readhead;
+}
 
 void CircBuffer::logRWPos()
 {

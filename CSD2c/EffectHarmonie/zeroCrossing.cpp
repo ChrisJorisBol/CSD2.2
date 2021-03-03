@@ -22,7 +22,7 @@ bool ZeroCrossing::findZeroC(float sample)
   // bool negPos = true;
   // bool zeroC = false;
   bool negPos;
-  std::cout<<sample<<std::endl;
+  // std::cout<<sample<<std::endl;
   // float sampletest=ceil(sample);
   // std::cout<<sampletest<<std::endl;
   float newSample = sample+1;
@@ -30,6 +30,6 @@ bool ZeroCrossing::findZeroC(float sample)
   {
     // bool zeroC=true;
     // return zeroC;
-    std::cout<<"MILGUH";
+    // std::cout<<"MILGUH";
   }
 }
