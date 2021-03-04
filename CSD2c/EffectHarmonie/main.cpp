@@ -5,20 +5,7 @@
 #include "circBuffer.h"
 #include "zeroCrossing.h"
 #include "lpf.h"
-/*
- * NOTE: jack2 needs to be installed
- * jackd invokes the JACK audio server daemon
- * https://github.com/jackaudio/jackaudio.github.com/wiki/jackd(1)
- * on mac, you can start the jack audio server daemon in the terminal:
- * jackd -d coreaudio
- */
-
-// 10 seconds if samplerate = 44100
-#define MAX_DELAY_SIZE 441000
-
 #define PI_2 6.28318530717959
-
-// Run program and set delaytime as argument (in seconds)
 
 int main(int argc,char **argv)
 {
@@ -26,15 +13,19 @@ int main(int argc,char **argv)
   JackModule jack;
   // init the jack, use program name as JACK client name
   jack.init(argv[0]);
+
   float samplerate = jack.getSamplerate();
 
   // transform delay time in seconds to delay time in number of samples
   // instantiate circular buffer, 2x larger then delay time and set delay
   CircBuffer circBuffer(441000);
-  circBuffer.setDistanceRW(50);
-  circBuffer.setDistanceExtraRW(441);
+  circBuffer.setDistanceRW(1);
+  circBuffer.setDistanceExtraRW(200);
+  circBuffer.setEnvelopeValue(1);
   // circBuffer.setDistanceExtraRWO(441);
   // circBuffer.setDistanceExtraRWOL(441);
+  int x[] = {1,1,2,1,1,1,2,1,1,1,2,1};
+  std::cout<<x[0]<<x[1]<<std::endl;
   circBuffer.logAllSettings();
 
   //assign a function to the JackModule::onProces
@@ -43,23 +34,15 @@ int main(int argc,char **argv)
 
     for(unsigned int i = 0; i < nframes; i++) {
       // write input to delay
-      //Writing multiple times allows sample skipping
-      //Usage of this allows intervals besides an octave.
       circBuffer.write(inBuf[i]);
-      circBuffer.tick();
-      circBuffer.write(inBuf[i]);
-      circBuffer.tick();
-      circBuffer.write(inBuf[i]);
-      circBuffer.tick();
-      circBuffer.write(inBuf[i]);
-      outBuf[i] = circBuffer.readExtraRH()* 0.5;
+      outBuf[i] = circBuffer.read()+circBuffer.readExtraRH(i)* 0.5;
 
 
       circBuffer.tick();
-      // circBuffer.tickReadHead();
-      //Below is the tick for the fifth
-      circBuffer.tickExtraRH();
-      // //Below is the tick for an octave higher
+      circBuffer.tickReadHead();
+      // Below is the tick for the fifth
+      circBuffer.tickExtraRH(i);
+      // Below is the tick for an octave higher
       // circBuffer.tickExtraRHO();
       // //Below is the tick for an octave lower
       // circBuffer.tickExtraRHOL();

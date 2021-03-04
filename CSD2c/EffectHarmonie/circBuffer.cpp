@@ -60,28 +60,54 @@ uint CircBuffer::getDistanceExtraRW()
 	return m_distanceExtraRW;
 }
 
+void CircBuffer::setEnvelopeValue(uint value)
+{
+	envelopeValue = value;
+}
+
+float CircBuffer::getEnvelopeValue()
+{
+	// static int values[]={0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9};
+	return envelopeValue;
+}
+
 uint CircBuffer::calcDistance(uint readhead)
 {
 	//calculate the distance to see if we need extra wrapping
 	//as to not go past the writehead.
+
 	int distance;
 	distance = m_writeH-readhead;
-	std::cout<<"distance = "<<distance<<std::endl;
 
+	if(distance<=170)
+	{
+
+	}
 	if(distance<0)
 	{
 		distance = (readhead-m_size) * -1 + m_writeH;
 	}
-	if(distance < 1000 && wrapExtraRH == 1)
+	std::cout<<"distance  = "<<distance<<std::endl;
+	//a thousand samples in the buffer is actually only 250 different samples
+	//that get read at normal speed
+	if(distance < 1280 && wrapExtraRH == 1)
 	{
-		readhead-=5000;
+		readhead-=320;
 	}
-	if(distance < 1000 && wrapExtraRH == 0)
+	// if(distance>=190)
+	// {
+	// 	setEnvelopeValue(calcEnvelopeValue/10);
+	// }
+	if(distance < 1280 && wrapExtraRH == 0)
 	{
-		readhead = m_size-5000;
+		int y = 320-readhead;
+		readhead = m_size-y;
 	}
 	return readhead;
 }
+
+
+
 
 void CircBuffer::logRWPos()
 {

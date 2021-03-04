@@ -14,10 +14,10 @@ LowPF::~LowPF()
 float LowPF::calcNewSample(float sample)
 {
   //to do, make this a better filter that uses fft maybe;
+  //Samplesave, saves the sample, to add to the next sample
+  //This should be a very barebones, lowpass filter
   static float sampleSave = 0;
-  std::cout<<sampleSave<<std::endl;
   float sampleReturn = sample + sampleSave;
-  std::cout<<sampleReturn<<std::endl;
   sampleSave = sample;
   return sampleReturn;
 }

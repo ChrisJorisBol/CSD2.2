@@ -20,7 +20,11 @@ public:
   uint getDistanceRW();
 	void setDistanceExtraRW(uint distanceExtraRW);
 	uint getDistanceExtraRW();
+	// Calculate the distance for extra wrapping purposes
 	uint calcDistance(uint readhead);
+	void setEnvelopeValue(uint value);
+	float getEnvelopeValue();
+
 	// float readExtra(float sample);
 	// write and read values at write / read head
 	inline void write(float val)
@@ -30,32 +34,21 @@ public:
 	inline float read()
 	{
 		sample = m_buffer[m_readH];
-		// sample = decimalFilter(sample);
-		// std::cout<<sample<<std::endl;
-		// bool zeroC = findZeroC(sample);
-		// if(zeroC == true)
-		// {
-		// 	std::cout<<"ZeroCrossing found";
-		// }
+
 		return sample;
 	}
-	inline float readExtraRH()
+	inline float readExtraRH(uint i)
 	{
 		sample = m_buffer[m_extraReadH];
+
+		// if(count < 10)
+		// {
+		// 	sample = sample*0.1;
+		// }
+		// sample = calcNewSample(decimalFilter(sample));
 		return sample;
 	}
-	// inline float readExtraRHO()
-	// {
-	// 	sample = m_buffer[m_extraReadHO];
-	// 	return sample;
-	// }
-	// inline float readExtraRHOL()
-	// {
-	// 	sample = m_buffer[m_extraReadHOL];
-	// 	return sample;
-	// }
 
-  // method to set a step in time --> move to next sample
   inline void tick() {
     incrWriteH();
   }
@@ -63,8 +56,8 @@ public:
 	{
 		incrReadH();
 	}
-	inline void tickExtraRH(){
-		incrExtraReadH();
+	inline void tickExtraRH(uint i){
+		incrExtraReadH(i);
 	}
 	// inline void tickExtraRHO(){
 	// 	incrExtraReadHO();
@@ -88,25 +81,20 @@ private:
 	}
 
 	inline void incrReadH() {
-		m_readH++;
-		m_readH++;
 
+		m_readH++;
 		wrapH(m_readH);
 	}
-
-	inline void incrExtraReadH()
+	//Extra readhead, is used for a different note
+	inline void incrExtraReadH(uint i)
 	{
-		//skips 6 samples to aquire a fifth
-		//8 for an octave
-		//2 for an lower octave
-		m_extraReadH++;
-		m_extraReadH++;
-		m_extraReadH++;
-		m_extraReadH++;
-		m_extraReadH++;
-		m_extraReadH++;
+		static int tertsArray[] = {1,1,2,1,1,1,2,1,1,1,2,1,1,1,2,1};
+		// int fifthArray[] = {1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2};
+		int x = (i%16);
+		m_extraReadH += tertsArray[x];
 		wrapExtraH(m_extraReadH);
 		m_extraReadH = calcDistance(m_extraReadH);
+
 	}
 	// inline void incrExtraReadHO()
 	// {
@@ -142,13 +130,17 @@ private:
 			head -= m_size;
 		}
 	}
+
 	inline void wrapExtraH(uint& head){
 		if (head >= m_size)
 		{
 			head -= m_size;
 			wrapExtraRH = 0;
 		}
-		else if(head >= (m_size/4))
+		//As long as the threshold isn't reached at a 4th of the buffer size
+		//We assume that we need to place the writehead near the end of the buffer
+		//instead of risking placing the readhead before the starting point of the buffer
+		else if(head >= 1280)
 		{
 			wrapExtraRH = 1;
 		}
@@ -161,6 +153,9 @@ private:
 	int distance;
 	uint m_size;
 	float sample;
+	uint i;
+	uint value;
+	uint envelopeValue;
 	// read and write heads, delay size
 	uint m_readH;
 	uint readhead;
