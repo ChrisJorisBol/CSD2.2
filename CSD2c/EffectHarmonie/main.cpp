@@ -21,11 +21,10 @@ int main(int argc,char **argv)
   CircBuffer circBuffer(441000);
   circBuffer.setDistanceRW(1);
   circBuffer.setDistanceExtraRW(200);
-  circBuffer.setEnvelopeValue(1);
+  circBuffer.setEnvelopeValue(80);
   // circBuffer.setDistanceExtraRWO(441);
   // circBuffer.setDistanceExtraRWOL(441);
-  int x[] = {1,1,2,1,1,1,2,1,1,1,2,1};
-  std::cout<<x[0]<<x[1]<<std::endl;
+
   circBuffer.logAllSettings();
 
   //assign a function to the JackModule::onProces
@@ -35,7 +34,7 @@ int main(int argc,char **argv)
     for(unsigned int i = 0; i < nframes; i++) {
       // write input to delay
       circBuffer.write(inBuf[i]);
-      outBuf[i] = circBuffer.read()+circBuffer.readExtraRH(i)* 0.5;
+      outBuf[i] = circBuffer.read()+circBuffer.readExtraRH()* 0.5;
 
 
       circBuffer.tick();

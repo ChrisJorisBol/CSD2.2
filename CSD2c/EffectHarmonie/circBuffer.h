@@ -22,7 +22,7 @@ public:
 	uint getDistanceExtraRW();
 	// Calculate the distance for extra wrapping purposes
 	uint calcDistance(uint readhead);
-	void setEnvelopeValue(uint value);
+	void setEnvelopeValue(int count);
 	float getEnvelopeValue();
 
 	// float readExtra(float sample);
@@ -37,10 +37,10 @@ public:
 
 		return sample;
 	}
-	inline float readExtraRH(uint i)
+	inline float readExtraRH()
 	{
-		sample = m_buffer[m_extraReadH];
-
+		sample = m_buffer[m_extraReadH]*getEnvelopeValue();
+		// std::cout<<"sample value equals = "<<sample<<std::endl;
 		// if(count < 10)
 		// {
 		// 	sample = sample*0.1;
@@ -88,9 +88,8 @@ private:
 	//Extra readhead, is used for a different note
 	inline void incrExtraReadH(uint i)
 	{
-		static int tertsArray[] = {1,1,2,1,1,1,2,1,1,1,2,1,1,1,2,1};
-		// int fifthArray[] = {1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2};
 		int x = (i%16);
+		static int tertsArray[16] = {1,1,2,1,1,1,2,1,1,1,2,1,1,1,2,1};
 		m_extraReadH += tertsArray[x];
 		wrapExtraH(m_extraReadH);
 		m_extraReadH = calcDistance(m_extraReadH);
@@ -154,10 +153,15 @@ private:
 	uint m_size;
 	float sample;
 	uint i;
-	uint value;
-	uint envelopeValue;
+	int value;
+	int count=0;
+	int count2=100;
+	float envelopeValue;
+	float values[100];
 	// read and write heads, delay size
 	uint m_readH;
+
+	int fifthArray[16] = {1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2};
 	uint readhead;
 	uint wrapExtraWH;
 	uint wrapExtraRH;

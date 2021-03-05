@@ -7,6 +7,13 @@ CircBuffer::CircBuffer() : CircBuffer(0) {}
 CircBuffer::CircBuffer(uint size) : m_size(size), m_readH(0), m_writeH(0)
 {
 	allocateBuffer();
+	for(int i = 0; i<100; i++)
+	{
+		float x = 0.01*i;
+		values[i]=x;
+		std::cout<<"values[i] = "<<values[i]<<std::endl;
+	}
+	// std::cout<<"values[i] = "<<values[10]<<std::endl;
 }
 
 
@@ -60,48 +67,70 @@ uint CircBuffer::getDistanceExtraRW()
 	return m_distanceExtraRW;
 }
 
-void CircBuffer::setEnvelopeValue(uint value)
+void CircBuffer::setEnvelopeValue(int count)
 {
-	envelopeValue = value;
+	// std::cout<<"count equals = "<<count<<std::endl;
+	this -> envelopeValue = this -> values[count];
+	// std::cout<<values[];
 }
 
 float CircBuffer::getEnvelopeValue()
 {
-	// static int values[]={0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9};
-	return envelopeValue;
+	//
+	return this-> envelopeValue;
 }
 
 uint CircBuffer::calcDistance(uint readhead)
 {
 	//calculate the distance to see if we need extra wrapping
 	//as to not go past the writehead.
-
 	int distance;
 	distance = m_writeH-readhead;
 
-	if(distance<=170)
-	{
 
-	}
 	if(distance<0)
 	{
 		distance = (readhead-m_size) * -1 + m_writeH;
 	}
+	if(distance>=3180)
+	{
+
+		setEnvelopeValue(count);
+		count++;
+		std::cout<<"count = "<<count<<std::endl;
+	}
+	if(distance<2580)
+	{
+
+		setEnvelopeValue(count2);
+		count2-=1;
+		std::cout<<"count2 = "<<count2<<std::endl;
+	}
+	std::cout<<"distance  = "<<distance<<std::endl;
+	// if(distance<3180)
+	// {
+	// 	setEnvelopeValue(90);
+	// }
+	std::cout<<"getenvelopevalue gives ="<<getEnvelopeValue()<<std::endl;
 	std::cout<<"distance  = "<<distance<<std::endl;
 	//a thousand samples in the buffer is actually only 250 different samples
 	//that get read at normal speed
-	if(distance < 1280 && wrapExtraRH == 1)
+	if(distance < 2560 && wrapExtraRH == 1)
 	{
-		readhead-=320;
+		readhead-=640;
+		count = 0;
+		count2 = 80;
 	}
 	// if(distance>=190)
 	// {
 	// 	setEnvelopeValue(calcEnvelopeValue/10);
 	// }
-	if(distance < 1280 && wrapExtraRH == 0)
+	if(distance < 2560 && wrapExtraRH == 0)
 	{
-		int y = 320-readhead;
+		int y = 640-readhead;
 		readhead = m_size-y;
+		count = 10;
+		count2 = 90;
 	}
 	return readhead;
 }
