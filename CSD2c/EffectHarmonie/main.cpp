@@ -7,6 +7,9 @@
 #include "lpf.h"
 #define PI_2 6.28318530717959
 
+// TO DO - Seperate circbuffer into an envelope class
+// and pitch shift/harmonize class
+
 int main(int argc,char **argv)
 {
   // create a JackModule instance
@@ -22,6 +25,7 @@ int main(int argc,char **argv)
   circBuffer.setDistanceRW(1);
   circBuffer.setDistanceExtraRW(200);
   circBuffer.setEnvelopeValue(80);
+
   // circBuffer.setDistanceExtraRWO(441);
   // circBuffer.setDistanceExtraRWOL(441);
 

@@ -40,11 +40,6 @@ public:
 	inline float readExtraRH()
 	{
 		sample = m_buffer[m_extraReadH]*getEnvelopeValue();
-		// std::cout<<"sample value equals = "<<sample<<std::endl;
-		// if(count < 10)
-		// {
-		// 	sample = sample*0.1;
-		// }
 		// sample = calcNewSample(decimalFilter(sample));
 		return sample;
 	}
@@ -95,32 +90,6 @@ private:
 		m_extraReadH = calcDistance(m_extraReadH);
 
 	}
-	// inline void incrExtraReadHO()
-	// {
-	// 	//skips 6 samples to aquire a fifth
-	// 	//8 for an octave
-	// 	//2 for an lower octave
-	// 	m_extraReadHO++;
-	// 	m_extraReadHO++;
-	// 	m_extraReadHO++;
-	// 	m_extraReadHO++;
-	// 	m_extraReadHO++;
-	// 	m_extraReadHO++;
-	// 	m_extraReadHO++;
-	// 	m_extraReadHO++;
-	// 	wrapExtraHO(m_extraReadHO);
-	// 	calcDistance(m_extraReadHO);
-	// }
-	// inline void incrExtraReadHOL()
-	// {
-	// 	//skips 6 samples to aquire a fifth
-	// 	//8 for an octave
-	// 	//2 for an lower octave
-	// 	m_extraReadHOL++;
-	// 	m_extraReadHOL++;
-	// 	wrapExtraHOL(m_extraReadHOL);
-	// 	calcDistance(m_extraReadHOL);
-	// }
 
   // wrap a head if necessary
   inline void wrapH(uint& head) {

@@ -94,25 +94,16 @@ uint CircBuffer::calcDistance(uint readhead)
 	}
 	if(distance>=3180)
 	{
-
+		// This count activates a set amount of samples of distance
+		// between the readhead and writehead, this acts as an envelope
 		setEnvelopeValue(count);
 		count++;
-		std::cout<<"count = "<<count<<std::endl;
 	}
 	if(distance<2580)
 	{
-
 		setEnvelopeValue(count2);
 		count2-=1;
-		std::cout<<"count2 = "<<count2<<std::endl;
 	}
-	std::cout<<"distance  = "<<distance<<std::endl;
-	// if(distance<3180)
-	// {
-	// 	setEnvelopeValue(90);
-	// }
-	std::cout<<"getenvelopevalue gives ="<<getEnvelopeValue()<<std::endl;
-	std::cout<<"distance  = "<<distance<<std::endl;
 	//a thousand samples in the buffer is actually only 250 different samples
 	//that get read at normal speed
 	if(distance < 2560 && wrapExtraRH == 1)
@@ -121,10 +112,7 @@ uint CircBuffer::calcDistance(uint readhead)
 		count = 0;
 		count2 = 80;
 	}
-	// if(distance>=190)
-	// {
-	// 	setEnvelopeValue(calcEnvelopeValue/10);
-	// }
+
 	if(distance < 2560 && wrapExtraRH == 0)
 	{
 		int y = 640-readhead;
